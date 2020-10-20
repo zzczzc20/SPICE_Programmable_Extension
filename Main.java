@@ -1,14 +1,23 @@
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class Main{
     public static void main(String args[]) {
         IntelligentLineDuplicater("C? nodei? nodeo? 50p", 200);
         MultiPortSubcktGenerator("name", "nodei1 nodei2?node102 nodei3");
+        BiFunction<Integer, Integer, Integer> CustomEvalInSRAM = (x, y) -> {
+            if(y >= 8){
+                y = y - 8;
+            }
+            return (8 * x + y);
+        };
+        IntelligentLineDuplicaterXE("Xbyte! WL iBL? iBL? iBL? iBL? iBL? iBL? iBL? iBL? BL? BL? BL? BL? BL? BL? BL? BL? Vdd 0", 256, CustomEvalInSRAM);
     }
     public static void IntelligentLineDuplicater(String s, int num) {
         for(int lptr = 0; lptr < num; lptr++){
             String str = s;
-            for(int i = 0; i < s.length(); i++){
+            for(int i = 0; i < str.length(); i++){
                 if(str.charAt(i) == '?'){
                     String s1 = str.substring(0, i);
                     String s2 = str.substring(i + 1);
@@ -44,5 +53,34 @@ public class Main{
         titLine = titLine + portList;
         System.out.println(titLine);
         System.out.println(endLine);
+    }
+    public static void IntelligentLineDuplicaterXE(String s, int num, BiFunction<Integer, Integer, Integer> f) {
+        for(int lptr = 0; lptr < num; lptr++){
+            String str = s;
+            int ctr = 0;
+            for(int i = 0; i < str.length(); i++){
+                if(str.charAt(i) == '?'){
+                    String s1 = str.substring(0, i);
+                    String s2 = str.substring(i + 1);
+                    str = s1 + f.apply(lptr, ctr) + s2;
+                    ctr++;
+                }
+                else if(str.charAt(i) == '!'){
+                    String s1 = str.substring(0, i);
+                    String s2 = str.substring(i + 1);
+                    str = s1 + lptr + s2;
+                }
+            }
+            System.out.println(str);
+        }
+    }
+}
+
+class status {
+    int x;
+    int y;
+    status(int x_, int y_){
+        x = x_;
+        y = y_;
     }
 }
